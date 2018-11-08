@@ -8,7 +8,39 @@ export default class AutosController {
   showAutos() {
     console.log("autobots assemble")
     let autos = _autosService.getAutos()
-    let template = ""
+    let template = `
+    <form onsubmit="app.controllers.autosController.addAuto(event)">
+      <div class="form-group">
+        <label for="make">Make</label>
+        <input type="text" name="make" />
+      </div>
+      <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" name="model" />
+      </div>
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" />
+      </div>
+      <div class="form-group">
+        <label for="miles">Mile:</label>
+        <input type="number" name="miles" />
+      </div>
+      <div class="form-group">
+        <label for="PRICE">Price:</label>
+        <input type="number" name="PRICE" />
+      </div>
+      <div class="form-group">
+        <label for="img">Image:</label>
+        <input type="url" name="img" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea type="text" name="description"></textarea>
+      </div>
+      <button type="submit">Add Auto</button>
+    </form>
+    `
     autos.forEach(auto => {
       template += `
         <div class="col card">

@@ -5,16 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
   <title>GregsList</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 
 <body>
+
+<div class="container">
+  <div class="row title-row">
+    
+      <h1>Gregg's List</h1>
+    
+  </div>
+</div>
+
+
+
   <!-- MOUNTING POINTS -->
   <div id="app">
-    <div class="categories">
+    <div class="categories buttons">
       <button class="btn btn-primary" onclick="app.controllers.autosController.showAutos()">Autos</button>
-      <button class="btn btn-primary">Real Estate</button>
+      <button class="btn btn-primary" onclick='app.controllers.realEstateController.showRealEstate()'>Real Estate</button>
       <button class="btn btn-primary">Jobs</button>
     </div>
 
@@ -24,6 +36,7 @@
       </div>
     </div>
 
+<!--     
     <form onsubmit="app.controllers.autosController.addAuto(event)">
       <div class="form-group">
         <label for="make">Make</label>
@@ -55,6 +68,7 @@
       </div>
       <button type="submit">Add Auto</button>
     </form>
+     -->
 
 
   </div>
