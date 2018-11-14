@@ -5,12 +5,12 @@ let _autosService = new AutosService()
 
 export default class AutosController {
 
+  //show all autos on load
   constructor() {
     _autosService.getAutos(this.showAutos)
   }
 
   showAutos() {
-    
     let autos = _autosService.autos
     let template = `
     <form onsubmit="app.controllers.autosController.addAuto(event)">

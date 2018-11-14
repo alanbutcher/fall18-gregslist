@@ -4,36 +4,53 @@ let _jobsService = new JobsService()
 
 export default class JobsController {
 
+  //show all jobs on load
+  constructor() {
+    _jobsService.getJobs(this.showJobs)
+  }
+
   showJobs() {
-    console.log('They took er jerbs!')
-    let jobs = _jobsService.getJobs() // jobs are in job service, in the get Jobs funtion
+    let jobs = _jobsService.jobs 
     let template = `
       <form onsubmit="app.controllers.jobsController.addJob(event)">
-      <div class="form-group">
-        <label for="jobTitle">Job Title:</label>
-        <input type="text" name="jobTitle" />
-      </div>
-      <div class="form-group">
-        <label for="salary">Salary:</label>
-        <input type="number" name="salary" />
-      </div>
-      <div class="form-group">
-        <label for="qualifications">Qualifications:</label>
-        <textarea type="text" name="qualifictions"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="img">Image:</label>
-        <input type="url" name="img" />
-      </div>
-      <button type="submit">Add Auto</button>
-    </form>
+        <div class="form-group">
+          <label for="company">Company:</label>
+          <input type="text" name="company" />
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job Title:</label>
+          <input type="text" name="jobTitle" />
+        </div>
+        <div class="form-group">
+          <label for="hours">Hours:</label>
+          <input type="number" name="hours" />
+        </div>
+        <div class="form-group">
+          <label for="rate">Rate:</label>
+          <input type="number" name="rate" />
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea type="text" name="description"></textarea>
+        </div>
+        <button type="submit">Add Job</button>
+      </form>
     `
     jobs.forEach(job => {
       template += `
-         <div class="col card">
-          <img src="${job.img}">
-          <h5>${job.jobTitle} - ${job.salary}</h5>
-          <p>Qualifications: ${job.qualifications}</p>
+         <div class="col-sm-4 my-1 card">
+           <div class="">
+            <div class="card-body">
+              <h5 class="card-title">${job.company} - ${job.jobTitle} ${job.hours}</h5>
+              <div class="card-text">
+                <p>Rate:${job.rate}</p>
+                <p>${job.description}</p>
+                <div>
+                  <i class="fa fa-fw fa-trash action muted" onclick="app.controllers.jobsController.destroyJob('${job._id}')"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       `
     })
@@ -44,14 +61,17 @@ export default class JobsController {
     event.preventDefault(); //prevents the page from reloading
     let form = event.target // the element that triggers the event
     let formData = {
+      company: form.company.value,
       jobTitle: form.jobTitle.value,
-      salary: form.salary.value,
-      qualifications: form.value,
-      img: form.img.value
+      hours: form.hours.value,
+      rate: form.rate.value,
+      description: form.description.value
+      
     }
-    _jobsService.addJob(formData)
-    this.showJobs()
+    _jobsService.addJob(formData, this.showJobs)
     form.reset()
   }
-
+  destroyJob(id) {
+    _jobsService.destroyJob(id, this.showJobs)
+  }
 }
