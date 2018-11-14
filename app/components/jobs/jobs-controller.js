@@ -6,7 +6,7 @@ export default class JobsController {
 
   showJobs() {
     console.log('They took er jerbs!')
-    let jobs = _jobsService.getJobs()
+    let jobs = _jobsService.getJobs() // jobs are in job service, in the get Jobs funtion
     let template = `
       <form onsubmit="app.controllers.jobsController.addJob(event)">
       <div class="form-group">

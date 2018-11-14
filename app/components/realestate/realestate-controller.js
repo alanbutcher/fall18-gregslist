@@ -9,18 +9,18 @@ export default class RealEstateController {
     let re = _realEstateService.getRealEstate()
     let template = `
     <form onsubmit="app.controllers.realEstateController.addRealEstate(event)">
-  <div class="form-group">
-    <label for="img">Image:</label>
-    <input type="url" name="img" />
-  </div>
-  <div class="form-group">
-    <label for="sqfoot">Sqfoot:</label>
-    <input type="number" name="sqfoot" />
-  </div>
-  <div class="form-group">
-    <label for="bedroom">Bedroom:</label>
-    <input type="number" name="bedroom" />
-  </div>
+      <div class="form-group">
+        <label for="img">Image:</label>
+        <input type="url" name="img" />
+      </div>
+      <div class="form-group">
+        <label for="sqfoot">Sqfoot:</label>
+        <input type="number" name="sqfoot" />
+      </div>
+      <div class="form-group">
+        <label for="bedroom">Bedroom:</label>
+        <input type="number" name="bedroom" />
+      </div>
   <div class="form-group">
     <label for="bathroom">Bathroom:</label>
     <input type="number" name="bathroom" />

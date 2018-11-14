@@ -5,9 +5,13 @@ let _autosService = new AutosService()
 
 export default class AutosController {
 
+  constructor() {
+    _autosService.getAutos(this.showAutos)
+  }
+
   showAutos() {
-    console.log("autobots assemble")
-    let autos = _autosService.getAutos()
+    
+    let autos = _autosService.autos
     let template = `
     <form onsubmit="app.controllers.autosController.addAuto(event)">
       <div class="form-group">
@@ -22,17 +26,14 @@ export default class AutosController {
         <label for="year">Year:</label>
         <input type="number" name="year" />
       </div>
-      <div class="form-group">
-        <label for="miles">Mile:</label>
-        <input type="number" name="miles" />
-      </div>
+     
       <div class="form-group">
         <label for="PRICE">Price:</label>
         <input type="number" name="PRICE" />
       </div>
       <div class="form-group">
-        <label for="img">Image:</label>
-        <input type="url" name="img" />
+        <label for="imgUrl">Image:</label>
+        <input type="url" name="imgUrl" />
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
@@ -43,11 +44,20 @@ export default class AutosController {
     `
     autos.forEach(auto => {
       template += `
-        <div class="col card">
-          <img src="${auto.img}">
-          <h5>${auto.make} - ${auto.model} ${auto.year}</h5>
-          <p>Miles: ${auto.miles}</p>
-          <p>Price: ${auto.price}</p>
+        <div class="col-sm-4 my-1 card">
+          <div class="">
+            <img class="card-img-top" src="${auto.imgUrl}">
+            <div class="card-body">
+              <h5 class="card-title">${auto.make} - ${auto.model} ${auto.year}</h5>
+              <div class="card-text">
+                <p>Price: ${auto.price}</p>
+                <p>${auto.description}</p>
+                <div>
+                  <i class="fa fa-fw fa-trash action muted" onclick="app.controllers.autosController.destroyAuto('${auto._id}')"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       `
     })
@@ -61,14 +71,17 @@ export default class AutosController {
       make: form.make.value,
       model: form.model.value,
       year: form.year.value,
-      miles: form.miles.value,
       price: form.PRICE.value,
       description: form.description.value,
-      img: form.img.value
+      imgUrl: form.imgUrl.value
     }
-    _autosService.addAuto(formData)
-    this.showAutos()
+    _autosService.addAuto(formData, this.showAutos)
+    // this.showAutos() //this iwll immediatly draw, needs to wait for POST request
     form.reset()
+  }
+
+  destroyAuto(id) {
+    _autosService.destroyAuto(id, this.showAutos)
   }
 
 }
