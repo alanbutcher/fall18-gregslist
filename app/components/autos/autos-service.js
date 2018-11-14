@@ -12,7 +12,7 @@ function handleError(err) {
 }
 
 export default class AutosService {
-  //HTTP
+  //HTTP destroy car
   destroyAuto(id, showAutos) {
     _api.delete(id)
       .then(res => {
@@ -20,8 +20,7 @@ export default class AutosService {
       })
     .catch(handleError)
   }
-
-  //HTTP
+  //HTTP add car
   addAuto(formData, fnToRunOnSuccess) {
     //need to send form data to api (SERVER)
     //wait for server to respond

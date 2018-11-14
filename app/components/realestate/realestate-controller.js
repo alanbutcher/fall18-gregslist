@@ -4,91 +4,87 @@ let _realEstateService = new RealEstateService()
 
 export default class RealEstateController {
 
+    //show all on load
+  constructor() {
+    _realEstateService.getRealEstate(this.showRealEstate)
+  }
+
   showRealEstate() {
-    console.log('nice house');
-    let re = _realEstateService.getRealEstate()
+    let house = _realEstateService.realEstate
     let template = `
     <form onsubmit="app.controllers.realEstateController.addRealEstate(event)">
       <div class="form-group">
-        <label for="img">Image:</label>
-        <input type="url" name="img" />
+        <label for="imgUrl">Image:</label>
+        <input type="url" name="imgUrl" />
       </div>
       <div class="form-group">
-        <label for="sqfoot">Sqfoot:</label>
-        <input type="number" name="sqfoot" />
+        <label for="bedrooms">Bedrooms:</label>
+        <input type="number" name="bedrooms" />
       </div>
       <div class="form-group">
-        <label for="bedroom">Bedroom:</label>
-        <input type="number" name="bedroom" />
+        <label for="bathrooms">Bathrooms:</label>
+        <input type="number" name="bathrooms" />
       </div>
-  <div class="form-group">
-    <label for="bathroom">Bathroom:</label>
-    <input type="number" name="bathroom" />
-  </div>
-  <div class="form-group">
-    <label for="price">Price:</label>
-    <input type="number" name="price" />
-  </div>
-  <div class="form-group">
-    <label for="address">Address:</label>
-    <input type="text" name="address" />
-  </div>
-  <button type="submit">Add Real Estate</button>
-</form>
+      <div class="form-group">
+        <label for="levels">Levels:</label>
+        <input type="number" name="levels" />
+      </div>
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="tear" />
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" name="price" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea type="text" name="description"></textarea>
+      </div>
+    <button type="submit">Add Real Estate</button>
+  </form>
 `
-    re.forEach(realestate => {
+    house.forEach(realestate => {
       template += `
-       <div class="col card">
-          <img src="${realestate.img}">
-          <h5>${realestate.sqfoot} - ${realestate.bedroom} - ${realestate.bathroom}</h5>
-          <p>Price: ${realestate.price}</p>
-          <p>Address: ${realestate.address}</p>
+         <div class="col-sm-4 my-1 card">
+          <div class="">
+            <img class="card-img-top" src="${realestate.imgUrl}">
+            <div class="card-body">
+              <h5 class="card-title">${realestate.bedrooms} - ${realestate.bathrooms} ${realestate.levels} - ${realestate.year}</h5>
+              <div class="card-text">
+                <p>Price: ${realestate.price}</p>
+                <p>${realestate.description}</p>
+                <div>
+                  <i class="fa fa-fw fa-trash action muted" onclick="app.controllers.realEstateController.destroyRealEstate('${realestate._id}')"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ` 
-    });
+    })
     document.getElementById('main-content').innerHTML=template
   }
+
   addRealEstate(event) {
     event.preventDefault();
     let form = event.target
     let formData = {
-      img: form.img.value,
-      sqfoot: form.sqfoot.value,
-      bedroom: form.bedroom.value,
-      bathroom: form.bathroom.value,
+      imgUrl: form.imgUrl.value,
+      bedrooms: form.bedrooms.value,
+      bathrooms: form.bathrooms.value,
+      levels: form.levels.value,
+      year: form.year.value,
       price: form.price.value, 
-      address: form.address.value
+      description: form.description.value
+      
     }
-    _realEstateService.addRealEstate(formData)
-    this.showRealEstate()
+    _realEstateService.addRealEstate(formData, this.showRealEstate)
     form.reset()
   }
 
+  destroyRealEstate(id) {
+    _realEstateService.destroyRealEstate(id, this.showRealEstate)
+  }
+
 }
-{/* <form onsubmit="app.controllers.realEstateController.addRealEstate(event)">
-  <div class="form-group">
-    <label for="img">Image:</label>
-    <input type="url" name="img" />
-  </div>
-  <div class="form-group">
-    <label for="size">Size::</label>
-    <input type="number" name="size" />
-  </div>
-  <div class="form-group">
-    <label for="bedroom">Bedroom:</label>
-    <input type="number" name="bedroom" />
-  </div>
-  <div class="form-group">
-    <label for="bathroom">Bathroom:</label>
-    <input type="number" name="bathroom" />
-  </div>
-  <div class="form-group">
-    <label for="price">Price:</label>
-    <input type="number" name="price" />
-  </div>
-  <div class="form-group">
-    <label for="address">Address:</label>
-    <input type="text" name="address" />
-  </div>
-  <button type="submit">Add Real Estate</button>
-</form> */}
